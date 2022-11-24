@@ -1,0 +1,5 @@
+name: LinkDiscord
+version: '${project.version}'
+main: com.github.tanokun.linkdiscord.LinkDiscord
+api-version: 1.18
+authors: [ tanokun ]
