@@ -23,9 +23,9 @@ lateinit var plugin: LinkDiscord private set
 class LinkDiscord : JavaPlugin() {
     lateinit var bot: JDA private set
 
-    lateinit var bukkitAudiences: BukkitAudiences
+    private lateinit var bukkitAudiences: BukkitAudiences
 
-    lateinit var activity: String
+    private lateinit var activity: String
 
     var consoleChannelId: Long = lazy { config.getLong("consoleChannel") }.value
         set(value) {
