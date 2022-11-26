@@ -1,0 +1,8 @@
+botToken: token
+
+consoleChannel: 0
+
+users:
+  - id(Long)
+
+activity: This server is online! [[onlinePlayerSize]/[maxPlayerSize]]
