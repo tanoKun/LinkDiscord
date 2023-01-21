@@ -11,16 +11,19 @@ import org.bukkit.Bukkit
 class CommandListener: ListenerAdapter() {
     override fun onSlashCommandInteraction(e: SlashCommandInteractionEvent) {
         if (e.name == "setup") {
-            when (e.subcommandName) {
-                "console" -> {
-                    plugin.consoleChannelId = e.channel.idLong
-                    e.replyEmbeds(EmbedBuilder().setTitle("在のチャンネルを遠隔コンソールに設定しました").build()).setEphemeral(false).queue()
-                    Bukkit.getConsoleSender()
-                        .sendMessage("[LinkDiscord] §b遠隔コンソールが設定されました (ChannelID: ${plugin.consoleChannelId})")
-                }
+            if (!plugin.users.contains(e.user.idLong)) {
+                when (e.subcommandName) {
+                    "console" -> {
+                        plugin.consoleChannelId = e.channel.idLong
+                        e.replyEmbeds(EmbedBuilder().setTitle("現在のチャンネルを遠隔コンソールに設定しました").build())
+                            .setEphemeral(false).queue()
+                        Bukkit.getConsoleSender()
+                            .sendMessage("[LinkDiscord] §b遠隔コンソールが設定されました (ChannelID: ${plugin.consoleChannelId})")
+                    }
 
-                else -> {
-                    e.replyEmbeds(EmbedBuilder().setTitle("サブコマンドが存在しません").build()).setEphemeral(false).queue()
+                    else -> {
+                        e.replyEmbeds(EmbedBuilder().setTitle("サブコマンドが存在しません").build()).setEphemeral(false).queue()
+                    }
                 }
             }
         } else if (e.name == "cmd") {
@@ -35,6 +38,14 @@ class CommandListener: ListenerAdapter() {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd)
             })
             e.replyEmbeds(EmbedBuilder().setTitle("DiscordUser: ${e.user.name} が「$cmd」を実行しました").build()).setEphemeral(false).queue()
+
+        } else if (e.name == "players") {
+            if (!plugin.users.contains(e.user.idLong)) {
+                e.replyEmbeds(EmbedBuilder().setTitle("権限がありません").build()).setEphemeral(false).queue()
+                return
+            }
+
+            e.replyEmbeds(EmbedBuilder().setTitle(Bukkit.getOnlinePlayers().joinToString(", ") { it.name }).build()).setEphemeral(false).queue()
         }
     }
 

@@ -58,12 +58,16 @@ class LinkDiscord : JavaPlugin() {
 
         bot.upsertCommand("setup", "データの設定をします")
             .addSubcommands(SubcommandData("console", "遠隔コンソールの設定をします"))
-            .setDefaultPermissions(DefaultMemberPermissions.DISABLED)
+            .setDefaultPermissions(DefaultMemberPermissions.ENABLED)
             .queue()
 
         bot.upsertCommand("cmd", "コンソールからコマンドを実行します")
             .addOption(OptionType.STRING, "command", "コマンドの内容")
-            .setDefaultPermissions(DefaultMemberPermissions.DISABLED)
+            .setDefaultPermissions(DefaultMemberPermissions.ENABLED)
+            .queue()
+
+        bot.upsertCommand("players", "プレイヤーの一覧を見ます")
+            .setDefaultPermissions(DefaultMemberPermissions.ENABLED)
             .queue()
     }
 
